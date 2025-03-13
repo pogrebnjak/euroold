@@ -1,0 +1,231 @@
+﻿jQuery(document).ready(function($) {
+    $('.quantity').append('<span class="plus"></span>');
+    $('.quantity').append('<span class="minus"></span>');
+    $('.minus').click(function () {
+        var $input = $(this).parent().find('input');
+        var count = parseInt($input.val()) - 1;
+        count = count < 1 ? 1 : count;
+        $input.val(count);
+        $input.change();
+        return false;
+    });
+    $('.plus').click(function () {
+        var $input = $(this).parent().find('input');
+        $input.val(parseInt($input.val()) + 1);
+        $input.change();
+        return false;
+    });
+});
+jQuery(document).ready(function($) {
+	var md = new MobileDetect(navigator.userAgent);
+	if ( md.mobile() && !md.tablet() ) {
+		jQuery("#main_owl_slider").remove();
+		jQuery(".main_slider_link_block").css({
+		position:'relative',
+		marginTop: '5px',
+		marginLeft: 'auto',
+		marginRight:'auto',
+		width:'300px'
+		});
+	} else {
+		jQuery("#main_owl_slider").owlCarousel({
+		  slideSpeed : 300,
+		  paginationSpeed : 400,
+		  singleItem:true,
+		  responsive:true,
+		  autoHeight : true,
+		  navigation : true,
+		  navigationText : ['<i class="fa fa-play"></i>','<i class="fa fa-play"></i>'],
+		  autoPlay : true
+		})
+  };
+  var prev = jQuery('#main_owl_slider > div.owl-controls.clickable > div.owl-buttons > div.owl-prev');
+  var next = jQuery('#main_owl_slider > div.owl-controls.clickable > div.owl-buttons > div.owl-next');
+  jQuery('#main_owl_slider > div.owl-controls.clickable > div.owl-pagination').prepend(prev);
+  jQuery('#main_owl_slider > div.owl-controls.clickable > div.owl-pagination').append(next);
+  var owl = $(".owl-carousel").data('owlCarousel');
+
+  prev.click(function(){
+    owl.prev();   
+  });
+  next.click(function(){
+    owl.next();   
+  });
+
+  jQuery('.menu-toggle').click(function(){
+    jQuery('#menu-mainmenu').toggleClass('visible');
+    jQuery('.menu-toggle').toggleClass('active');
+  });
+
+  jQuery( ".more_info_link" ).click(function() {
+    $(this).next().next("p").slideToggle();
+	$( this ).parents( ".item_block" ).first().toggleClass( "above10" );
+    return false;
+  });
+  
+  jQuery('.page .review_block .title').click(function(){
+    jQuery('.page .review_block .title').removeClass('active').next().slideUp();
+    jQuery(this).addClass('active').next().slideDown();                                       
+  });
+  
+  jQuery('.title_block .catalog_link').click(function(){
+    jQuery(this).find('.cat_sub_menu').toggle();                                       
+  });
+  
+  //jQuery('.title_block .catalog_link>ul>li').hover(function(){
+//    jQuery(this).find('ul').toggle();                                       
+//  });
+
+
+    /*function valid_input(input){
+    	console.log(input);
+        if(input.val().length < 6){
+           input.addClass('mLandingError');
+       } else {
+           input.removeClass('mLandingError');
+       }
+    }
+    
+    // AJAX FORM
+    
+    jQuery('button.eMainScreenFormSubmit, button.eDirectorFormSubmit, button.eContactsFormSubmit').click(function(){
+        var form = jQuery(this).parents('form');
+        valid_input(form.find('input[name=phone]'));
+       if(form.find('input').hasClass('error')){
+           return false; 
+       } else {
+           var msg = form.serialize();
+            jQuery.ajax({
+              type: 'POST',
+              url: 'http://euroblock.info/public_html/wp-content/themes/nebster-site/res.php',
+              data: msg,
+              success: function(data) {
+                  console.log(data);
+              },
+              error:  function(xhr, str){
+                    alert('Возникла ошибка: ' + xhr.responseCode);
+                }
+            });
+       }
+       return false;
+    });
+*/
+
+
+
+
+
+
+
+
+});
+
+
+jQuery(document).on('click', '.custom_input_number .cin_increment', function(e) {
+    var $input = $(this).siblings('.cin_input'),
+        val = parseInt($input.val()),
+        max = parseInt($input.attr('max')),
+        step = parseInt($input.attr('step'));
+ 
+    var temp = val + step;
+    $input.val(temp <= max ? temp : max);
+});
+jQuery(document).on('click', '.custom_input_number .cin_decrement', function(e) {
+    var $input = jQuery(this).siblings('.cin_input'),
+        val = parseInt($input.val()),
+        min = parseInt($input.attr('min')),
+        step = parseInt($input.attr('step'));
+ 
+    var temp = val - step;
+    $input.val(temp >= min ? temp : min);
+});
+
+jQuery('.search_block_wrap select').each(function(){
+    jQuery(this).siblings('p').text( $(this).children('option:selected').text() );
+});
+jQuery('.search_block_wrap select').change(function(){
+    jQuery(this).siblings('p').text( $(this).children('option:selected').text() );
+});
+
+
+/* Меню Полный каталог */
+jQuery(document).ready(function() {  
+	if ( jQuery( ".title_block .catalog_link" ).is("*") ){
+		cont = jQuery( ".title_block .catalog_link .cat_sub_menu" ).first();
+		jQuery( "#menu-item-23 > .sub-menu > li" ).each(
+			function( index, element ){
+				jQuery( element ).clone().appendTo( cont );
+			}
+		)
+		/* Правка атрибутов ID */
+		jQuery( cont ).find( "li" ).each(
+			function( index, element ){
+				jQuery( element ).attr( "id", element.getAttribute( "id" ) + "-catalog" );
+			}
+		)
+	} 
+});
+
+
+
+/* Collapser */
+ jQuery( document ).ready( function( $ ) {
+	/*jQuery( '.item_description' ).collapser({
+		mode: 'lines',
+		truncate: 10,
+		showText: '>> Показать текст полностью',
+		hideText: '<< Спрятать текст',
+		showClass: 'hide-content',
+		hideClass: 'show-content'
+	});	*/
+});
+
+/* AJAX Load */
+ jQuery( document ).ready( function( $ ) {
+	
+	hide_load_more();
+	$ajax_container = jQuery( '.ajax_loading' ).first();
+	jQuery( '#load-more' ).click(
+		function(){
+			wp_query( Number( $ajax_container.data( 'current_page' ) ) + 1 ) ;
+		}
+	)
+});
+
+	function hide_load_more(){
+		
+		jQuery( '#no_posts_more' ).each(
+			function(){
+				jQuery( '#load-more' ).hide();
+			}
+		);
+	}
+	function wp_query( page ){
+		$ajax_container.stop().animate( {
+			"opacity" : "0.2"
+		}, 500 );
+		page = page || 1;
+		console.log( $ajax_container.data( 'post_type' ) );
+		jQuery.post( templuri + "/inc/ajax/ajax_post_query.php",
+			  {
+				page : page,
+				post_type : $ajax_container.data( 'post_type' ),
+				ppp : $ajax_container.data( 'ppp' )
+			  },
+			function( data ){
+				var html = '';
+				if ( page > 1 )
+					html = $ajax_container.html();
+				
+				html += data ;
+				$ajax_container.html( html );
+				$ajax_container.data( 'current_page', page );
+				jQuery( '#load-more' ).show();
+				hide_load_more();
+
+				$ajax_container.animate( {
+					"opacity" : "1"
+				}, 200 );
+		}
+		);
+	}

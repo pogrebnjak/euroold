@@ -1,0 +1,237 @@
+jQuery( document ).ready(function( $ ) {
+	
+	/* 
+		Предзагрузка 
+	*/		
+	preload_imgs = [];		
+	preload_imgs.push( pluginuri + '/images/ajax-loader.gif' );	
+	preload_imgs.push( pluginuri + '/images/ajax-loader2.gif' );	
+	preLoadImages( preload_imgs );	
+		
+	/*content accordion*/
+	$('.accordion').each(function(){
+		var acc = $(this).attr("rel") * 2;
+		//$(this).find('.accordion-inner:nth-child(' + acc + ')').show();
+		//$(this).find('.accordion-inner:nth-child(' + acc + ')').prev().addClass("active");
+	});
+	
+	$('.accordion .accordion-title').click(function() {
+		if($(this).next().is(':hidden')) {
+			$(this).parent().find('.accordion-title').removeClass('active').next().slideUp(200);
+			$(this).toggleClass('active').next().slideDown(200);
+		} else {
+			$(this).parent().find('.accordion-title').removeClass('active').next().slideUp(200);
+		}
+		return false;
+	});
+	
+	
+	/* 
+		Для работы кнопок вызова формы обратной связи кнопки должны иметь класс .request-callback-button
+		также в аттрибуте "callback-form" должен храниться id формы
+	*/
+	$( '.request-callback-button' ).each( 
+		function( index, element ){
+			$( element ).click(
+				function(){
+					if ( jQuery( "div" ).is( "#overlay" ) )
+						return;
+					Overlay( 2, 'cb-form' );
+					WindowInTheBG();
+					$( '#overlay_window .ow_content' ).append( $( '[id *= "wpcf7_contact_form-' + $( element ).attr( 'callback-form' ) + '"]' ) );
+				}
+			)
+		}
+	);
+	
+
+});
+jQuery( window ).load(function( $ ) {
+
+	if ( jQuery( window ).height() >= jQuery( 'body,html' ).height() ) { jQuery( "#colophon.scrollslide" ).addClass( "slidefooter" ); };	
+	
+});
+	/*
+		Вываливающийся футер при прокрутке окна до конца
+	*/
+	if ( jQuery( '.scrollslide' ).length > 0 ) {
+		if ( ! isMobile() ) {
+			jQuery( window ).scroll( function () {
+				if ( jQuery( window ).scrollTop() + jQuery( window ).height() >= ( jQuery( 'body,html' ).height() - 85 ) ) {
+					jQuery( "#colophon.scrollslide" ).addClass( "slidefooter" );
+				} 
+				else 
+				{
+					jQuery( "#colophon.scrollslide" ).removeClass( "slidefooter" );
+
+				}
+
+			});
+		}
+		else {
+			jQuery( "#colophon.scrollslide" ).addClass( "mobilefooter" );
+		};
+	};
+
+
+	/*
+		Фоновая предзагрузка изображений.
+		Пример формирования списка урлов изображений
+
+			imgs.push( templuri + '/images/ajax-loader2.gif' );			
+			preLoadImages( imgs );	
+			
+	*/
+	function preLoadImages() {
+		var args_len = arguments[0].length;
+		var cache = [];
+		for (var i = args_len; i--;) {
+		  var cacheImage = document.createElement('img');
+		  cacheImage.src = arguments[0][i];
+		  cache.push( cacheImage );
+		}
+	};
+	
+	
+	/***
+	*	in_array()  - js-аналог php-функции
+	***/
+	function in_array(needle, haystack, strict) {	// Checks if a value exists in an array
+		// 
+		// +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+
+		var found = false, key, strict = !!strict;
+
+		for (key in haystack) {
+			if ((strict && haystack[key] === needle) || (!strict && haystack[key] == needle)) {
+				found = true;
+				break;
+			}
+		}
+
+		return found;
+	}
+
+	/***
+		number_format()  - js-аналог php-функции
+		number - исходное число
+		decimals - количество знаков после разделителя
+		dec_point - символ разделителя
+		thousands_sep - разделитель тысячных
+	***/
+	function number_format( number, decimals, dec_point, thousands_sep ) {
+	  number = ( number + '' ).replace( /[^0-9+\-Ee.]/g, '' );
+	  var n = ! isFinite( +number ) ? 0 : +number,
+		prec = ! isFinite( +decimals ) ? 0 : Math.abs( decimals ),
+		sep = ( typeof thousands_sep === 'undefined' ) ? ',' : thousands_sep,
+		dec = ( typeof dec_point === 'undefined' ) ? '.' : dec_point,
+		s = '',
+		toFixedFix = function( n, prec ) {
+		  var k = Math.pow( 10, prec );
+		  return '' + ( Math.round( n * k ) / k )
+			.toFixed( prec );
+		};
+	  // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+	  s = ( prec ? toFixedFix( n, prec ) : '' + Math.round( n ) )
+		.split( '.' );
+	  if ( s[0].length > 3 ) {
+		s[0] = s[0].replace( /\B(?=(?:\d{3})+(?!\d))/g, sep );
+	  }
+	  if ( ( s[1] || '' )
+		.length < prec ) {
+		s[1] = s[1] || '';
+		s[1] += new Array( prec - s[1].length + 1 )
+		  .join( '0' );
+	  }
+	  return s.join( dec );
+	}	
+	
+	String.prototype.format = String.prototype.f = function () {
+		var args = arguments;
+		return this.replace(/\{\{|\}\}|\{(\d+)\}/g, function (m, n) {
+			if (m == "{{") { return "{"; }
+			if (m == "}}") { return "}"; }
+			return args[n];
+		});
+	};
+	
+	function isMobile(){
+		return (
+			( navigator.userAgent.match(/Android/i) ) ||
+			( navigator.userAgent.match(/webOS/i) ) ||
+			( navigator.userAgent.match(/iPhone/i) ) ||
+			( navigator.userAgent.match(/iPod/i) ) ||
+			( navigator.userAgent.match(/iPad/i) ) ||
+			( navigator.userAgent.match(/BlackBerry/) )
+		);
+	}
+	
+	function htmlspecialchars_decode (string, quoteStyle) { // eslint-disable-line camelcase
+	  //       discuss at: http://locutus.io/php/htmlspecialchars_decode/
+	  //      original by: Mirek Slugen
+	  //      improved by: Kevin van Zonneveld (http://kvz.io)
+	  //      bugfixed by: Mateusz "loonquawl" Zalega
+	  //      bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
+	  //      bugfixed by: Brett Zamir (http://brett-zamir.me)
+	  //      bugfixed by: Brett Zamir (http://brett-zamir.me)
+	  //         input by: ReverseSyntax
+	  //         input by: Slawomir Kaniecki
+	  //         input by: Scott Cariss
+	  //         input by: Francois
+	  //         input by: Ratheous
+	  //         input by: Mailfaker (http://www.weedem.fr/)
+	  //       revised by: Kevin van Zonneveld (http://kvz.io)
+	  // reimplemented by: Brett Zamir (http://brett-zamir.me)
+	  //        example 1: htmlspecialchars_decode("<p>this -&gt; &quot;</p>", 'ENT_NOQUOTES')
+	  //        returns 1: '<p>this -> &quot;</p>'
+	  //        example 2: htmlspecialchars_decode("&amp;quot;")
+	  //        returns 2: '&quot;'
+
+	  var optTemp = 0
+	  var i = 0
+	  var noquotes = false
+
+	  if (typeof quoteStyle === 'undefined') {
+		quoteStyle = 2
+	  }
+	  string = string.toString()
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+	  var OPTS = {
+		'ENT_NOQUOTES': 0,
+		'ENT_HTML_QUOTE_SINGLE': 1,
+		'ENT_HTML_QUOTE_DOUBLE': 2,
+		'ENT_COMPAT': 2,
+		'ENT_QUOTES': 3,
+		'ENT_IGNORE': 4
+	  }
+	  if (quoteStyle === 0) {
+		noquotes = true
+	  }
+	  if (typeof quoteStyle !== 'number') {
+		// Allow for a single string or an array of string flags
+		quoteStyle = [].concat(quoteStyle)
+		for (i = 0; i < quoteStyle.length; i++) {
+		  // Resolve string input to bitwise e.g. 'PATHINFO_EXTENSION' becomes 4
+		  if (OPTS[quoteStyle[i]] === 0) {
+			noquotes = true
+		  } else if (OPTS[quoteStyle[i]]) {
+			optTemp = optTemp | OPTS[quoteStyle[i]]
+		  }
+		}
+		quoteStyle = optTemp
+	  }
+	  if (quoteStyle & OPTS.ENT_HTML_QUOTE_SINGLE) {
+		// PHP doesn't currently escape if more than one 0, but it should:
+		string = string.replace(/&#0*39;/g, "'")
+		// This would also be useful here, but not a part of PHP:
+		// string = string.replace(/&apos;|&#x0*27;/g, "'");
+	  }
+	  if (!noquotes) {
+		string = string.replace(/&quot;/g, '"')
+	  }
+	  // Put this in last place to avoid escape being double-decoded
+	  string = string.replace(/&amp;/g, '&')
+
+	  return string
+	}

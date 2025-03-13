@@ -1,0 +1,282 @@
+.one2,
+.one3,
+.one4,
+.one5,
+.one6,
+.one12{
+	display : inline-block;
+	box-sizing : border-box;
+    vertical-align: top;
+}
+.one2 {
+    width: 50%;
+}
+.one3{
+	width : 33.33333%;
+}
+.one4 {
+    width: 25%;
+}
+.one5 {
+    width: 20%;
+}
+.one6 {
+    width: 16.66666%;
+}
+.one12 {
+    width: 8.33333%;
+}
+
+	/*
+		Лого разработчика в подвале сайта
+	*/
+.nebster_developer{
+	font-size : 10px;
+}
+.nebster_developer.nologo{
+	background-image : none;
+}
+
+	/*
+		Вываливающийся футер при прокрутке окна до конца
+	*/
+.scrollslide.site-footer{
+	margin-top : 30px;
+	position: fixed;
+    /*bottom: -80px;*/
+	left: 0;	
+    width: 100%;
+    z-index: 1000;
+    opacity: .9;
+    transition: all 1s ease-in;
+    -o-transition: all 1s ease-in;
+    -moz-transition: all 1s ease-in;
+    -webkit-transition: all 1s ease-in;	
+}
+.scrollslide.slidefooter {
+    bottom: 0px !important;
+    transition: all 0.7s cubic-bezier(.22,.5,.01,.99);
+    -o-transition: all 0.7s cubic-bezier(.22,.5,.01,.99);
+    -moz-transition: all 0.7s cubic-bezier(.22,.5,.01,.99);
+    -webkit-transition: all 0.7s cubic-bezier(.22,.5,.01,.99);
+}
+.mobilefooter {
+    bottom: 0px !important;
+    position: relative !important;
+}
+/*
+	OVERLAY
+*/
+#overlay_window{
+    background: #FFF;
+	padding: 20px;
+	min-height: 380px !important;
+}
+#overlay_window i.close{
+    position: absolute;
+    right: 4px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+	padding: 5px 0;
+    cursor: pointer;
+}
+#overlay_window .ow_content{
+	padding: 25px;
+    height: 100%;
+    overflow-y: scroll;
+    box-sizing: border-box;
+}
+#overlay_window .ow_content::-webkit-scrollbar-button {
+background-image:url('');
+background-repeat:no-repeat;
+width:5px;
+height:0px
+}
+
+#overlay_window .ow_content::-webkit-scrollbar-track {
+background-color:#ecedee
+}
+
+#overlay_window .ow_content::-webkit-scrollbar-thumb {
+-webkit-border-radius: 0px;
+border-radius: 0px;
+background-color:#6dc0c8;
+}
+
+#overlay_window .ow_content::-webkit-scrollbar-thumb:hover{
+background-color:#56999f;
+}
+
+#overlay_window .ow_content::-webkit-resizer{
+background-image:url('');
+background-repeat:no-repeat;
+width:4px;
+height:0px
+}
+
+#overlay_window .ow_content::-webkit-scrollbar{
+width: 4px;
+}
+#overlay_window input[type="text"],
+#overlay_window input[type="email"],
+#overlay_window input[type="url"],
+#overlay_window input[type="tel"],
+#overlay_window input[type="password"],
+#overlay_window input[type="search"],
+#overlay_window textarea{
+	width : 100%;
+	margin-bottom: 5px;
+}
+
+#overlay_window input[type="text"]:focus,
+#overlay_window input[type="email"]:focus,
+#overlay_window input[type="url"]:focus,
+#overlay_window input[type="tel"]:focus,
+#overlay_window input[type="password"]:focus,
+#overlay_window input[type="search"]:focus,
+#overlay_window textarea:focus {
+	color: #000;
+	background : #EAEAEA;
+}
+@media screen and (max-width:736px){
+	#overlay_window{
+		top: 0 !important;
+		right: 0 !important;
+		left: 0 !important;
+		bottom: 0 !important;
+		width: initial !important;
+		height: initial !important;
+		max-width: initial !important;
+		max-height: initial !important;
+	}
+	#ow_content{}
+	
+}
+/*
+	OWL Carousel
+*/
+.owl-carousel.slider{
+	overflow : hidden;
+}
+.owl-carousel-slide{
+    position: relative;
+	line-height: 0;	
+}
+.owl-carousel-slide a{
+    color: inherit;
+}
+.carusel_text{
+	position: absolute;	
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.82);
+	line-height: 1;
+    padding: 15px;	
+	color: #A2A2A2;
+}
+.carusel_text > span{
+    font-size: 19px;
+}
+.carusel_text > p{
+    padding: 5px 0;
+    margin: 5px 0 0 0;
+}
+.owl-buttons > div{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: calc(50% - 25px);
+    transition: all 1s ease;
+}
+.owl-buttons .owl-prev{
+    left: -50px;
+}
+.owl-buttons .owl-next{
+    right: -50px;
+}
+.slider:hover .owl-buttons .owl-next{
+	right : 0px;
+}
+.slider:hover .owl-buttons .owl-prev{
+	left : 0px;
+}
+.owl-buttons .owl-next:before,
+.owl-buttons .owl-prev:before{
+	font-family : Dashicons;
+	font-size : 50px;
+	color : #8A8585;
+	line-height: 1;
+}
+.owl-buttons .owl-prev:before{
+	content: "\f341";
+}
+.owl-buttons .owl-next:before{
+	content: "\f345";
+}
+.owl-buttons .owl-next:hover::before,
+.owl-buttons .owl-prev:hover::before{
+	color : #FFF;
+}
+/*
+	Mobile Menu
+*/
+#sliiider_toggle {
+    position: absolute;
+    top: 175px;
+    left: 12px;
+    display: none;
+    color: #6D6B6B;
+    cursor: pointer;
+}
+.mobile.notablet #sliiider_toggle {
+    display: block;
+}
+#sliiider_toggle:before {
+    font-family: Dashicons;
+    content: "\f333";
+    font-size: 50px;
+}
+#sliiider_close {
+    position: absolute;
+    top: 12px;
+    right: 0;
+    color: #AFABAB;
+    cursor: pointer;
+    z-index: 100;
+}
+#sliiider_close:before {
+	font-family: Dashicons;
+    content: "\f335";
+    font-size: 40px;
+    line-height: 1;
+}
+#mobile_navigation {
+    visibility: hidden;
+	min-width: 300px;
+    max-width: 320px;
+    overflow-y: scroll;
+    background: #1E1E1F;
+    font-size: 12px;
+    padding: 15px 0 0 0;
+}
+#mobile_navigation ul{
+	margin: 0 !important;
+    padding-left: 20px;
+}
+#mobile_navigation > ul{
+	padding-bottom : 30px;
+}
+#mobile_navigation ul li{
+    list-style-type: none; 
+	margin-top: 5px;
+}
+#mobile_navigation ul li a{
+    color: #eee;
+    text-decoration: none;
+}
+
+.request-callback-button{
+	cursor : pointer;
+}
